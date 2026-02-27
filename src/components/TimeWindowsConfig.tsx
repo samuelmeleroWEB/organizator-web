@@ -2,6 +2,7 @@
 
 import { Clock, Sunrise, Moon } from 'lucide-react';
 import { AvailableWindow } from '@/types';
+import { CustomTimeSelect } from './CustomTimeSelect';
 
 export interface TimeWindowsConfigProps {
   windows: AvailableWindow[];
@@ -21,39 +22,29 @@ export function TimeWindowsConfig({ windows, setWindows }: TimeWindowsConfigProp
         <div key={w.id} className="flex gap-4 items-center">
           <div className="flex-1">
              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2 ml-1">Inicio de jornada</label>
-             <div className="relative group">
-               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
-                 <Sunrise size={20} />
-               </div>
-               <input 
-                 type="time" 
-                 value={w.startTime} 
-                 onChange={e => {
+             <CustomTimeSelect
+                 value={w.startTime}
+                 onChange={val => {
                    const nw = [...windows];
-                   nw[index].startTime = e.target.value;
+                   nw[index].startTime = val;
                    setWindows(nw);
                  }}
-                 className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-3 py-3.5 text-slate-800 font-bold text-lg tracking-wide focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-50 hover:[&::-webkit-calendar-picker-indicator]:opacity-100"
+                 icon={<Sunrise size={20} />}
+                 className="text-lg py-3 tracking-wide"
                />
-             </div>
           </div>
           <div className="flex-1">
              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2 ml-1">Fin de jornada</label>
-             <div className="relative group">
-               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
-                 <Moon size={20} />
-               </div>
-               <input 
-                 type="time" 
-                 value={w.endTime} 
-                 onChange={e => {
+             <CustomTimeSelect
+                 value={w.endTime}
+                 onChange={val => {
                    const nw = [...windows];
-                   nw[index].endTime = e.target.value;
+                   nw[index].endTime = val;
                    setWindows(nw);
                  }}
-                 className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-3 py-3.5 text-slate-800 font-bold text-lg tracking-wide focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-50 hover:[&::-webkit-calendar-picker-indicator]:opacity-100"
+                 icon={<Moon size={20} />}
+                 className="text-lg py-3 tracking-wide"
                />
-             </div>
           </div>
         </div>
       ))}

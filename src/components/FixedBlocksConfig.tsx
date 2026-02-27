@@ -3,6 +3,7 @@
 import { Calendar, Plus, Trash2, Clock } from 'lucide-react';
 import { Block } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
+import { CustomTimeSelect } from './CustomTimeSelect';
 
 export interface FixedBlocksConfigProps {
   blocks: Block[];
@@ -49,35 +50,27 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
                 }}
                 className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-200 transition-all font-medium text-slate-700 w-full"
               />
-              <div className="relative group flex-shrink-0">
-                <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-amber-500 transition-colors">
-                  <Clock size={14} />
-                </div>
-                <input 
-                  type="time" 
+              <div className="w-[110px] flex-shrink-0">
+                <CustomTimeSelect
                   value={block.startTime}
-                  onChange={e => {
+                  onChange={val => {
                     const nb = [...blocks];
-                    nb[index].startTime = e.target.value;
+                    nb[index].startTime = val;
                     setBlocks(nb);
                   }}
-                  className="w-[105px] bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-2 py-2.5 text-sm font-bold text-slate-700 outline-none focus:bg-white focus:border-amber-400 focus:ring-4 focus:ring-amber-500/10 transition-all cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-50 hover:[&::-webkit-calendar-picker-indicator]:opacity-100"
+                  icon={<Clock size={16} />}
                 />
               </div>
 
-              <div className="relative group flex-shrink-0">
-                <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-amber-500 transition-colors">
-                  <Clock size={14} />
-                </div>
-                <input 
-                  type="time" 
+              <div className="w-[110px] flex-shrink-0">
+                <CustomTimeSelect
                   value={block.endTime}
-                  onChange={e => {
+                  onChange={val => {
                     const nb = [...blocks];
-                    nb[index].endTime = e.target.value;
+                    nb[index].endTime = val;
                     setBlocks(nb);
                   }}
-                  className="w-[105px] bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-2 py-2.5 text-sm font-bold text-slate-700 outline-none focus:bg-white focus:border-amber-400 focus:ring-4 focus:ring-amber-500/10 transition-all cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-50 hover:[&::-webkit-calendar-picker-indicator]:opacity-100"
+                  icon={<Clock size={16} />}
                 />
               </div>
               <button 
