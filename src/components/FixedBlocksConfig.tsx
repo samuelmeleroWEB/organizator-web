@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, Plus, Trash2 } from 'lucide-react';
+import { Calendar, Plus, Trash2, Clock } from 'lucide-react';
 import { Block } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -49,26 +49,37 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
                 }}
                 className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-200 transition-all font-medium text-slate-700 w-full"
               />
-              <input 
-                type="time" 
-                value={block.startTime}
-                onChange={e => {
-                  const nb = [...blocks];
-                  nb[index].startTime = e.target.value;
-                  setBlocks(nb);
-                }}
-                className="w-[85px] bg-slate-50 border border-slate-200 rounded-xl px-2 py-2.5 text-sm outline-none focus:border-amber-400 font-medium text-slate-600"
-              />
-              <input 
-                type="time" 
-                value={block.endTime}
-                onChange={e => {
-                  const nb = [...blocks];
-                  nb[index].endTime = e.target.value;
-                  setBlocks(nb);
-                }}
-                className="w-[85px] bg-slate-50 border border-slate-200 rounded-xl px-2 py-2.5 text-sm outline-none focus:border-amber-400 font-medium text-slate-600"
-              />
+              <div className="relative group flex-shrink-0">
+                <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-amber-500 transition-colors">
+                  <Clock size={14} />
+                </div>
+                <input 
+                  type="time" 
+                  value={block.startTime}
+                  onChange={e => {
+                    const nb = [...blocks];
+                    nb[index].startTime = e.target.value;
+                    setBlocks(nb);
+                  }}
+                  className="w-[105px] bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-2 py-2.5 text-sm font-bold text-slate-700 outline-none focus:bg-white focus:border-amber-400 focus:ring-4 focus:ring-amber-500/10 transition-all cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-50 hover:[&::-webkit-calendar-picker-indicator]:opacity-100"
+                />
+              </div>
+
+              <div className="relative group flex-shrink-0">
+                <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-amber-500 transition-colors">
+                  <Clock size={14} />
+                </div>
+                <input 
+                  type="time" 
+                  value={block.endTime}
+                  onChange={e => {
+                    const nb = [...blocks];
+                    nb[index].endTime = e.target.value;
+                    setBlocks(nb);
+                  }}
+                  className="w-[105px] bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-2 py-2.5 text-sm font-bold text-slate-700 outline-none focus:bg-white focus:border-amber-400 focus:ring-4 focus:ring-amber-500/10 transition-all cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-50 hover:[&::-webkit-calendar-picker-indicator]:opacity-100"
+                />
+              </div>
               <button 
                 onClick={() => setBlocks(blocks.filter(b => b.id !== block.id))}
                 className="text-slate-300 hover:text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors"
