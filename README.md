@@ -2,7 +2,7 @@
 
 👉 **[¡Prueba la Demo Gratis en Vivo Aquí!](https://organizator-web.vercel.app/)**
 
-![Organizator.AI Banner](https://via.placeholder.com/1200x600?text=Organizator.AI+-+Intelligent+Agenda+Generator)
+
 
 **Organizator.AI** is a smart, AI-powered daily agenda generator designed to optimize your productivity. By taking into account your available work hours, fixed meetings, and pending tasks, Organizator.AI crafts the perfect schedule using advanced AI models like GPT-4o-mini, GPT-4o, and Claude 3.5 Sonnet.
 
