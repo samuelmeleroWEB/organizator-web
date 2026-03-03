@@ -41,29 +41,32 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
               key={task.id} 
               className="p-4 bg-slate-50 hover:bg-emerald-50/30 rounded-2xl border border-slate-200 group transition-colors"
             >
-              <div className="flex gap-3 items-start mb-3">
-                <input 
-                  type="text" 
-                  placeholder="¿Qué necesitas hacer?"
-                  value={task.name}
-                  onChange={e => {
-                    const nt = [...tasks];
-                    nt[index].name = e.target.value;
-                    setTasks(nt);
-                  }}
-                  className="flex-1 bg-transparent border-none px-1 py-1 text-base font-medium text-slate-700 placeholder:text-slate-400 outline-none focus:ring-0"
-                />
+              <div className="flex gap-3 items-end mb-4">
+                <div className="flex-1">
+                  <label className="text-xs font-medium text-gray-500 block mb-1">Nombre de la tarea</label>
+                  <input 
+                    type="text" 
+                    placeholder="¿Qué necesitas hacer?"
+                    value={task.name}
+                    onChange={e => {
+                      const nt = [...tasks];
+                      nt[index].name = e.target.value;
+                      setTasks(nt);
+                    }}
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-indigo-500 transition-colors duration-150 text-gray-700 placeholder:text-gray-400"
+                  />
+                </div>
                 <button 
                   onClick={() => setTasks(tasks.filter(t => t.id !== task.id))}
-                  className="text-slate-300 hover:text-red-500 p-1.5 hover:bg-red-50 rounded-lg transition-colors mt-0.5"
+                  className="mb-[2px] text-slate-300 hover:text-red-500 p-2 hover:bg-red-50 rounded-lg transition-colors"
                 >
-                  <Trash2 size={16} />
+                  <Trash2 size={18} />
                 </button>
               </div>
               
-              <div className="flex flex-wrap gap-4 items-center text-sm border-t border-slate-200/60 pt-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-slate-500 font-medium text-xs uppercase tracking-wide">Minutos:</span>
+              <div className="flex flex-wrap gap-4 items-end text-sm">
+                <div className="flex flex-col">
+                  <label className="text-xs font-medium text-gray-500 block mb-1">Duración (min)</label>
                   <input 
                     type="number"
                     step="15" 
@@ -74,11 +77,11 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
                       nt[index].durationMinutes = parseInt(e.target.value) || 0;
                       setTasks(nt);
                     }}
-                    className="w-16 bg-white border border-slate-200 rounded-lg px-2 py-1 outline-none text-center font-semibold text-slate-700 focus:border-emerald-400"
+                    className="w-24 bg-white border border-gray-200 rounded-lg px-3 py-2 outline-none text-sm text-gray-700 focus:border-indigo-500 transition-colors duration-150"
                   />
                 </div>
-                <div className="flex items-center gap-2">
-                   <span className="text-slate-500 font-medium text-xs uppercase tracking-wide">Importancia:</span>
+                <div className="flex flex-col flex-1">
+                   <label className="text-xs font-medium text-gray-500 block mb-1">Prioridad</label>
                    <select 
                     value={task.priority}
                     onChange={e => {
@@ -86,7 +89,14 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
                       nt[index].priority = e.target.value as 'alta' | 'media' | 'baja' | '';
                       setTasks(nt);
                     }}
-                    className="bg-white border border-slate-200 rounded-lg px-3 py-1 outline-none text-xs font-semibold text-slate-700 focus:border-emerald-400 cursor-pointer"
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 outline-none text-sm text-gray-700 focus:border-indigo-500 transition-colors duration-150 cursor-pointer appearance-none"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 8l5 5 5-5'/%3e%3c/svg%3e")`,
+                      backgroundPosition: 'right 0.5rem center',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: '1.25em 1.25em',
+                      paddingRight: '2.5rem'
+                    }}
                    >
                      <option value="alta">Alta (Prioridad)</option>
                      <option value="media">Media</option>

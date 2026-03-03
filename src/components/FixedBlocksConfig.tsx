@@ -37,20 +37,24 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               key={block.id} 
-              className="flex gap-3 items-center group"
+              className="flex gap-3 items-end group"
             >
-              <input 
-                type="text" 
-                placeholder="Ej. Reunión..."
-                value={block.name}
-                onChange={e => {
-                  const nb = [...blocks];
-                  nb[index].name = e.target.value;
-                  setBlocks(nb);
-                }}
-                className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-200 transition-all font-medium text-slate-700 w-full"
-              />
+              <div className="flex-1">
+                <label className="text-xs font-medium text-gray-500 block mb-1">Nombre</label>
+                <input 
+                  type="text" 
+                  placeholder="Ej. Reunión..."
+                  value={block.name}
+                  onChange={e => {
+                    const nb = [...blocks];
+                    nb[index].name = e.target.value;
+                    setBlocks(nb);
+                  }}
+                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-indigo-500 transition-colors duration-150 text-gray-700"
+                />
+              </div>
               <div className="w-[110px] flex-shrink-0">
+                <label className="text-xs font-medium text-gray-500 block mb-1">Inicio</label>
                 <CustomTimeSelect
                   value={block.startTime}
                   onChange={val => {
@@ -63,6 +67,7 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
               </div>
 
               <div className="w-[110px] flex-shrink-0">
+                <label className="text-xs font-medium text-gray-500 block mb-1">Fin</label>
                 <CustomTimeSelect
                   value={block.endTime}
                   onChange={val => {
@@ -75,7 +80,7 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
               </div>
               <button 
                 onClick={() => setBlocks(blocks.filter(b => b.id !== block.id))}
-                className="text-slate-300 hover:text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors"
+                className="mb-[2px] text-slate-300 hover:text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors"
               >
                 <Trash2 size={18} />
               </button>

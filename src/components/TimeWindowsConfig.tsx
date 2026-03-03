@@ -39,7 +39,7 @@ export function TimeWindowsConfig({ windows, setWindows }: TimeWindowsConfigProp
           className="flex gap-4 items-end group"
         >
           <div className="flex-1">
-             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2 ml-1">Inicio de jornada</label>
+             <label className="text-xs font-medium text-gray-500 block mb-1">Inicio de jornada</label>
              <CustomTimeSelect
                  value={w.startTime}
                  onChange={val => {
@@ -47,12 +47,11 @@ export function TimeWindowsConfig({ windows, setWindows }: TimeWindowsConfigProp
                    nw[index].startTime = val;
                    setWindows(nw);
                  }}
-                 icon={<Sunrise size={20} />}
-                 className="text-lg py-3 tracking-wide"
+                 icon={<Sunrise size={18} />}
                />
           </div>
           <div className="flex-1">
-             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2 ml-1">Fin de jornada</label>
+             <label className="text-xs font-medium text-gray-500 block mb-1">Fin de jornada</label>
              <CustomTimeSelect
                  value={w.endTime}
                  onChange={val => {
@@ -60,17 +59,16 @@ export function TimeWindowsConfig({ windows, setWindows }: TimeWindowsConfigProp
                    nw[index].endTime = val;
                    setWindows(nw);
                  }}
-                 icon={<Moon size={20} />}
-                 className="text-lg py-3 tracking-wide"
+                 icon={<Moon size={18} />}
                />
           </div>
           {windows.length > 1 && (
             <button 
               onClick={() => setWindows(windows.filter(win => win.id !== w.id))}
-              className="mb-1 text-slate-300 hover:text-red-500 hover:bg-red-50 p-3.5 rounded-xl transition-colors flex-shrink-0"
+              className="mb-1 text-slate-300 hover:text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors flex-shrink-0"
               title="Eliminar turno"
             >
-              <Trash2 size={24} />
+              <Trash2 size={20} />
             </button>
           )}
         </motion.div>
