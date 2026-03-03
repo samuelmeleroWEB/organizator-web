@@ -21,7 +21,7 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
           <div className="bg-emerald-100 p-2 rounded-lg text-emerald-600">
             <Zap size={20} />
           </div>
-          <h2 className="text-lg font-bold text-slate-800">Tareas Pendientes</h2>
+          <h2 className="text-sm font-medium tracking-widest uppercase text-gray-400">Tareas Pendientes</h2>
         </div>
         <button 
           onClick={() => setTasks([...tasks, { id: Math.random().toString(), name: '', durationMinutes: 60, priority: 'media' }])}

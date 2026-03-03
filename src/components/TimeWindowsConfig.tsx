@@ -18,7 +18,7 @@ export function TimeWindowsConfig({ windows, setWindows }: TimeWindowsConfigProp
           <div className="bg-blue-100 p-2 rounded-lg text-blue-600">
             <Clock size={20} />
           </div>
-          <h2 className="text-lg font-bold text-slate-800">Horario de Trabajo</h2>
+          <h2 className="text-sm font-medium tracking-widest uppercase text-gray-400">Horario de Trabajo</h2>
         </div>
         <button 
           onClick={() => setWindows([...windows, { id: Math.random().toString(), startTime: '16:00', endTime: '19:00' }])}

@@ -18,7 +18,7 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
           <div className="bg-amber-100 p-2 rounded-lg text-amber-600">
             <Calendar size={20} />
           </div>
-          <h2 className="text-lg font-bold text-slate-800">Bloques Fijos</h2>
+          <h2 className="text-sm font-medium tracking-widest uppercase text-gray-400">Bloques Fijos</h2>
         </div>
         <button 
           onClick={() => setBlocks([...blocks, { id: Math.random().toString(), name: '', startTime: '12:00', endTime: '13:00' }])}
