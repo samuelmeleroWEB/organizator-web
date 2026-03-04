@@ -23,12 +23,6 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
           </div>
           <h2 className="text-sm font-medium tracking-widest uppercase text-gray-400">Tareas Pendientes</h2>
         </div>
-        <button 
-          onClick={() => setTasks([...tasks, { id: Math.random().toString(), name: '', durationMinutes: 60, priority: 'media' }])}
-          className="border border-gray-200 hover:border-gray-400 bg-white text-gray-600 rounded-lg px-3 py-1.5 text-sm font-medium flex gap-1 items-center transition-colors duration-150"
-        >
-          <Plus size={16} /> Tarea
-        </button>
       </div>
 
       <div className="space-y-3 flex-1 overflow-y-auto pr-1">
@@ -110,11 +104,17 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
           ))}
         </AnimatePresence>
         {tasks.length === 0 && (
-           <div className="h-full w-full flex flex-col items-center justify-center opacity-50 py-10">
+           <div className="flex flex-col items-center justify-center opacity-50 py-10">
               <LayoutDashboard size={48} className="text-slate-300 mb-3" />
               <p className="text-slate-500 font-medium text-center">Añade tus tareas para organizarlas</p>
            </div>
         )}
+        <button 
+          onClick={() => setTasks([...tasks, { id: Math.random().toString(), name: '', durationMinutes: 60, priority: 'media' }])}
+          className="w-full flex items-center justify-center gap-2 border border-dashed border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 text-gray-400 hover:text-indigo-500 rounded-lg py-2 mt-2 text-sm transition-all duration-150"
+        >
+          <Plus size={16} /> Añadir tarea
+        </button>
       </div>
       
       <div className="pt-4 mt-2 border-t border-slate-100 flex flex-col sm:flex-row gap-3">

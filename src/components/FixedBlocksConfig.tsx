@@ -20,13 +20,6 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
           </div>
           <h2 className="text-sm font-medium tracking-widest uppercase text-gray-400">Bloques Fijos</h2>
         </div>
-        <button 
-          onClick={() => setBlocks([...blocks, { id: Math.random().toString(), name: '', startTime: '12:00', endTime: '13:00' }])}
-          className="border border-gray-200 hover:border-gray-400 bg-white text-gray-600 rounded-lg p-2 transition-colors duration-150"
-          title="Añadir bloqueo"
-        >
-          <Plus size={20} />
-        </button>
       </div>
       
       <div className="space-y-3">
@@ -92,6 +85,12 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
              <p className="text-sm text-slate-400 font-medium">No hay eventos fijos hoy.</p>
           </div>
         )}
+        <button 
+          onClick={() => setBlocks([...blocks, { id: Math.random().toString(), name: '', startTime: '12:00', endTime: '13:00' }])}
+          className="w-full flex items-center justify-center gap-2 border border-dashed border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 text-gray-400 hover:text-indigo-500 rounded-lg py-2 mt-2 text-sm transition-all duration-150"
+        >
+          <Plus size={16} /> Añadir bloque
+        </button>
       </div>
     </section>
   );
