@@ -35,9 +35,10 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
         <AnimatePresence>
           {tasks.map((task, index) => (
             <motion.div 
-              initial={{ opacity: 0, x: -20, height: 0 }}
-              animate={{ opacity: 1, x: 0, height: 'auto' }}
-              exit={{ opacity: 0, x: 20, height: 0 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2, delay: index * 0.05 }}
+              exit={{ opacity: 0, height: 0 }}
               key={task.id} 
               className="p-4 bg-slate-50 hover:bg-emerald-50/30 rounded-2xl border border-slate-200 group transition-colors"
             >
@@ -126,14 +127,15 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
           Demo Gratis
          </button>
 
-         <button 
+         <motion.button 
+          whileTap={{ scale: 0.97 }}
           onClick={generatePlan}
           disabled={loading || tasks.length === 0}
-          className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/30 text-white font-bold py-3.5 rounded-xl transition transform hover:scale-[1.02] disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2"
+          className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/30 text-white font-bold py-3.5 rounded-xl transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
          >
           {loading ? <Loader2 className="animate-spin" /> : <Zap />}
           {loading ? 'Generando...' : 'Crear mi IA Agenda'}
-         </button>
+         </motion.button>
       </div>
       
       {error && (
