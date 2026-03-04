@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, AlertTriangle, CheckCircle, Coffee, Zap, Sun, ArrowRight } from 'lucide-react';
+import { Calendar, AlertTriangle } from 'lucide-react';
 import { PlanResponse } from '@/types';
 import { motion } from 'framer-motion';
 
@@ -68,46 +68,11 @@ export function PlanResult({ plan, loading }: PlanResultProps) {
 
         {/* Timeline Container */}
         <div className="flex-1 overflow-y-auto px-6 md:px-8 py-6 custom-scrollbar">
-          <div className="relative border-l-[3px] border-slate-100 ml-4 lg:ml-6 pb-4">
+          <div className="space-y-3">
             {plan.plan.map((item, i) => {
-               let dotColor = "bg-slate-300 ring-4 ring-white";
-               let bgColor = "bg-white hover:bg-slate-50";
-               let borderColor = "border-slate-200";
-               let accentBar = "bg-slate-300";
-               let icon = <CheckCircle size={20} className="text-slate-400" />;
-               let titleColor = "text-slate-800";
-
-               if (item.tipo === 'ocupado') {
-                 dotColor = "bg-amber-500 ring-4 ring-amber-50";
-                 bgColor = "bg-amber-50/50 hover:bg-amber-50";
-                 borderColor = "border-amber-200";
-                 accentBar = "bg-amber-400";
-                 icon = <Calendar size={20} className="text-amber-500" />;
-                 titleColor = "text-amber-900";
-               } else if (item.tipo === 'descanso') {
-                 dotColor = "bg-blue-400 ring-4 ring-blue-50";
-                 bgColor = "bg-blue-50/50 hover:bg-blue-50";
-                 borderColor = "border-blue-200";
-                 accentBar = "bg-blue-400";
-                 icon = <Coffee size={20} className="text-blue-500" />;
-                 titleColor = "text-blue-900";
-               } else {
-                 // Tareas
-                 if (item.prioridad === 'alta') {
-                   dotColor = "bg-emerald-500 ring-4 ring-emerald-50";
-                   bgColor = "bg-emerald-50/50 hover:bg-emerald-50";
-                   borderColor = "border-emerald-200";
-                   accentBar = "bg-emerald-500";
-                   icon = <Zap size={20} className="text-emerald-500" />;
-                   titleColor = "text-emerald-900";
-                 } else if (item.prioridad === 'media') {
-                   dotColor = "bg-indigo-400 ring-4 ring-indigo-50";
-                   bgColor = "bg-indigo-50/40 hover:bg-indigo-50/80";
-                   borderColor = "border-indigo-100";
-                   accentBar = "bg-indigo-400";
-                   icon = <Sun size={20} className="text-indigo-500" />;
-                 }
-               }
+               const isOccupied = item.tipo === 'ocupado';
+               const borderClass = isOccupied ? 'border-gray-200' : 'border-indigo-200';
+               const textClass = isOccupied ? 'text-gray-400' : 'text-gray-800';
 
                return (
                 <motion.div 
@@ -115,39 +80,16 @@ export function PlanResult({ plan, loading }: PlanResultProps) {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1, duration: 0.4, ease: "easeOut" }}
                   key={i} 
-                  className="mb-8 relative pl-8 lg:pl-10"
+                  className={`flex items-start border-l-2 ${borderClass} pl-4`}
                 >
-                  {/* Timeline Dot */}
-                  <div className={`absolute -left-[10px] top-6 w-[18px] h-[18px] rounded-full ${dotColor} shadow-sm z-10`}></div>
-                  
-                  <div className={`rounded-2xl border ${bgColor} ${borderColor} transition-all duration-300 hover:shadow-md hover:-translate-y-1 overflow-hidden relative group`}>
-                    {/* Color Bar */}
-                    <div className={`absolute top-0 left-0 w-1.5 h-full ${accentBar}`}></div>
-                    
-                    <div className="p-5 pl-7">
-                      <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-5">
-                        <div className="flex items-center sm:items-start gap-3 flex-shrink-0">
-                           <div className="bg-white p-2.5 rounded-xl shadow-sm border border-slate-100 flex-shrink-0">
-                             {icon}
-                           </div>
-                           <div className="sm:mt-1 font-mono text-sm font-bold text-slate-500 flex sm:flex-col items-center sm:items-start gap-1">
-                             <span>{item.hora_inicio}</span>
-                             <ArrowRight size={12} className="sm:hidden text-slate-300" />
-                             <span className="hidden sm:inline text-slate-300 text-xs">|</span>
-                             <span className="text-slate-400 font-medium">{item.hora_fin}</span>
-                           </div>
-                        </div>
-                        
-                        <div className="mt-1 sm:mt-0">
-                          <h4 className={`text-lg font-bold mb-1 ${titleColor}`}>{item.nombre}</h4>
-                          {item.notas && (
-                            <p className="text-slate-500 text-sm font-medium pr-4 leading-relaxed bg-white/50 inline-block px-3 py-1.5 rounded-lg border border-slate-100 mt-2">
-                              {item.notas}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                  <div className="text-xs text-gray-400 w-16 pt-0.5 shrink-0">
+                    {item.hora_inicio}
+                  </div>
+                  <div>
+                    <div className={`font-medium ${textClass}`}>{item.nombre}</div>
+                    {item.notas && (
+                      <div className="text-xs text-gray-400 mt-0.5">{item.notas}</div>
+                    )}
                   </div>
                 </motion.div>
               )
