@@ -22,7 +22,7 @@ export function TimeWindowsConfig({ windows, setWindows }: TimeWindowsConfigProp
         </div>
         <button 
           onClick={() => setWindows([...windows, { id: Math.random().toString(), startTime: '16:00', endTime: '19:00' }])}
-          className="bg-blue-50 text-blue-600 hover:bg-blue-100 p-2 rounded-xl transition-colors"
+          className="border border-gray-200 hover:border-gray-400 bg-white text-gray-600 rounded-lg p-2 transition-colors duration-150"
           title="Añadir turno"
         >
           <Plus size={20} />

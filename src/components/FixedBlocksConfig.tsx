@@ -22,7 +22,7 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
         </div>
         <button 
           onClick={() => setBlocks([...blocks, { id: Math.random().toString(), name: '', startTime: '12:00', endTime: '13:00' }])}
-          className="bg-amber-50 text-amber-600 hover:bg-amber-100 p-2 rounded-xl transition-colors"
+          className="border border-gray-200 hover:border-gray-400 bg-white text-gray-600 rounded-lg p-2 transition-colors duration-150"
           title="Añadir bloqueo"
         >
           <Plus size={20} />

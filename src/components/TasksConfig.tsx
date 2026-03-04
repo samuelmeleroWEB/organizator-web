@@ -25,7 +25,7 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
         </div>
         <button 
           onClick={() => setTasks([...tasks, { id: Math.random().toString(), name: '', durationMinutes: 60, priority: 'media' }])}
-          className="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 px-3 py-1.5 rounded-xl text-sm font-bold flex gap-1 items-center transition-colors"
+          className="border border-gray-200 hover:border-gray-400 bg-white text-gray-600 rounded-lg px-3 py-1.5 text-sm font-medium flex gap-1 items-center transition-colors duration-150"
         >
           <Plus size={16} /> Tarea
         </button>
@@ -121,7 +121,7 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
          <button 
           onClick={generateDemoPlan}
           disabled={loading}
-          className="w-full sm:w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 rounded-xl transition transform hover:scale-[1.02] disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2 border border-slate-200"
+          className="w-full sm:w-1/3 border border-gray-200 hover:border-gray-400 bg-white text-gray-600 rounded-lg py-2.5 text-sm font-medium transition-colors duration-150 disabled:opacity-50 flex items-center justify-center gap-2"
          >
           <Sparkles size={18} />
           Demo Gratis
@@ -131,7 +131,7 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
           whileTap={{ scale: 0.97 }}
           onClick={generatePlan}
           disabled={loading || tasks.length === 0}
-          className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/30 text-white font-bold py-3.5 rounded-xl transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+          className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-5 py-2.5 text-sm font-medium transition-colors duration-150 disabled:opacity-50 flex items-center justify-center gap-2"
          >
           {loading ? <Loader2 className="animate-spin" /> : <Zap />}
           {loading ? 'Generando...' : 'Crear mi IA Agenda'}

@@ -65,7 +65,7 @@ export function SettingsModal({
                </div>
                <button 
                  onClick={saveConfig}
-                 className="w-full bg-slate-800 hover:bg-slate-900 text-white font-medium py-2.5 rounded-xl transition-colors mt-2"
+                 className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-5 py-2.5 text-sm font-medium transition-colors duration-150 mt-2"
                >
                  Guardar Cambios
                </button>

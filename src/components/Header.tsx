@@ -16,7 +16,7 @@ export function Header({ showSettings, setShowSettings }: HeaderProps) {
       </div>
       <button 
         onClick={() => setShowSettings(!showSettings)}
-        className="p-2 lg:px-4 lg:py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium transition-colors flex items-center gap-2"
+        className="border border-gray-200 hover:border-gray-400 bg-white text-gray-600 rounded-lg p-2 lg:px-4 lg:py-2 text-sm font-medium transition-colors duration-150 flex items-center gap-2"
       >
         <Settings size={18} />
         <span className="hidden lg:inline">Ajustes API</span>
