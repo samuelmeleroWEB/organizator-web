@@ -59,9 +59,9 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
                 </button>
               </div>
               
-              <div className="flex flex-wrap gap-4 items-end text-sm">
+              <div className="grid grid-cols-[90px_1fr] sm:grid-cols-2 gap-3 items-start text-sm">
                 <div className="flex flex-col">
-                  <label className="text-xs font-medium text-gray-500 block mb-1">Duración (min)</label>
+                  <label className="text-xs text-gray-400 mb-1">Duración (min)</label>
                   <input 
                     type="number"
                     step="15" 
@@ -72,32 +72,43 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
                       nt[index].durationMinutes = parseInt(e.target.value) || 0;
                       setTasks(nt);
                     }}
-                    className="w-24 bg-white border border-gray-200 rounded-lg px-3 py-2 outline-none text-sm text-gray-700 focus:border-indigo-500 transition-colors duration-150"
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 outline-none text-sm text-gray-700 focus:border-indigo-500 transition-colors duration-150"
                   />
                 </div>
-                <div className="flex flex-col flex-1">
-                   <label className="text-xs font-medium text-gray-500 block mb-1">Prioridad</label>
-                   <select 
-                    value={task.priority}
-                    onChange={e => {
-                      const nt = [...tasks];
-                      nt[index].priority = e.target.value as 'alta' | 'media' | 'baja' | '';
-                      setTasks(nt);
-                    }}
-                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 outline-none text-sm text-gray-700 focus:border-indigo-500 transition-colors duration-150 cursor-pointer appearance-none"
-                    style={{
-                      backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 8l5 5 5-5'/%3e%3c/svg%3e")`,
-                      backgroundPosition: 'right 0.5rem center',
-                      backgroundRepeat: 'no-repeat',
-                      backgroundSize: '1.25em 1.25em',
-                      paddingRight: '2.5rem'
-                    }}
-                   >
-                     <option value="alta">Alta (Prioridad)</option>
-                     <option value="media">Media</option>
-                     <option value="baja">Baja (Mecánica)</option>
-                     <option value="">IA decide</option>
-                   </select>
+                <div className="flex flex-col">
+                   <label className="text-xs text-gray-400 mb-1">Prioridad</label>
+                   <div className="flex flex-row gap-1 sm:gap-2 flex-nowrap w-full">
+                     <button
+                       onClick={() => {
+                         const nt = [...tasks];
+                         nt[index].priority = 'alta';
+                         setTasks(nt);
+                       }}
+                       className={`flex-1 sm:flex-none justify-center border rounded-full px-1 sm:px-3 py-1 text-[11px] sm:text-xs font-medium transition-all duration-150 ${task.priority === 'alta' ? 'bg-red-100 text-red-600 border-red-200' : 'bg-white text-gray-500 border-gray-200 hover:bg-red-50 hover:border-red-200 hover:text-red-500'}`}
+                     >
+                       Alta
+                     </button>
+                     <button
+                       onClick={() => {
+                         const nt = [...tasks];
+                         nt[index].priority = 'media';
+                         setTasks(nt);
+                       }}
+                       className={`flex-1 sm:flex-none justify-center border rounded-full px-1 sm:px-3 py-1 text-[11px] sm:text-xs font-medium transition-all duration-150 ${task.priority === 'media' ? 'bg-amber-100 text-amber-600 border-amber-200' : 'bg-white text-gray-500 border-gray-200 hover:bg-amber-50 hover:border-amber-200 hover:text-amber-500'}`}
+                     >
+                       Media
+                     </button>
+                     <button
+                       onClick={() => {
+                         const nt = [...tasks];
+                         nt[index].priority = 'baja';
+                         setTasks(nt);
+                       }}
+                       className={`flex-1 sm:flex-none justify-center border rounded-full px-1 sm:px-3 py-1 text-[11px] sm:text-xs font-medium transition-all duration-150 ${task.priority === 'baja' ? 'bg-emerald-100 text-emerald-600 border-emerald-200' : 'bg-white text-gray-500 border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-500'}`}
+                     >
+                       Baja
+                     </button>
+                   </div>
                 </div>
               </div>
             </motion.div>

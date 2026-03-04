@@ -30,53 +30,60 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               key={block.id} 
-              className="flex gap-3 items-end group"
+              className="bg-white border border-gray-100 rounded-xl p-3 mb-3 group"
             >
-              <div className="flex-1">
-                <label className="text-xs font-medium text-gray-500 block mb-1">Nombre</label>
-                <input 
-                  type="text" 
-                  placeholder="Ej. Reunión..."
-                  value={block.name}
-                  onChange={e => {
-                    const nb = [...blocks];
-                    nb[index].name = e.target.value;
-                    setBlocks(nb);
-                  }}
-                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-indigo-500 transition-colors duration-150 text-gray-700"
-                />
+              <div className="flex flex-col gap-2">
+                <div className="flex items-end gap-2">
+                  <div className="grid grid-cols-1 gap-2 flex-1">
+                    <div>
+                      <label className="text-xs text-gray-400 block mb-1">Nombre</label>
+                      <input 
+                        type="text" 
+                        placeholder="Ej. Reunión..."
+                        value={block.name}
+                        onChange={e => {
+                          const nb = [...blocks];
+                          nb[index].name = e.target.value;
+                          setBlocks(nb);
+                        }}
+                        className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-indigo-500 transition-colors duration-150 text-gray-700"
+                      />
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => setBlocks(blocks.filter(b => b.id !== block.id))}
+                    className="text-slate-300 hover:text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors flex-shrink-0"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-xs text-gray-400 block mb-1">Inicio</label>
+                    <CustomTimeSelect
+                      value={block.startTime}
+                      onChange={val => {
+                        const nb = [...blocks];
+                        nb[index].startTime = val;
+                        setBlocks(nb);
+                      }}
+                      icon={<Clock size={16} />}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-400 block mb-1">Fin</label>
+                    <CustomTimeSelect
+                      value={block.endTime}
+                      onChange={val => {
+                        const nb = [...blocks];
+                        nb[index].endTime = val;
+                        setBlocks(nb);
+                      }}
+                      icon={<Clock size={16} />}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="w-[110px] flex-shrink-0">
-                <label className="text-xs font-medium text-gray-500 block mb-1">Inicio</label>
-                <CustomTimeSelect
-                  value={block.startTime}
-                  onChange={val => {
-                    const nb = [...blocks];
-                    nb[index].startTime = val;
-                    setBlocks(nb);
-                  }}
-                  icon={<Clock size={16} />}
-                />
-              </div>
-
-              <div className="w-[110px] flex-shrink-0">
-                <label className="text-xs font-medium text-gray-500 block mb-1">Fin</label>
-                <CustomTimeSelect
-                  value={block.endTime}
-                  onChange={val => {
-                    const nb = [...blocks];
-                    nb[index].endTime = val;
-                    setBlocks(nb);
-                  }}
-                  icon={<Clock size={16} />}
-                />
-              </div>
-              <button 
-                onClick={() => setBlocks(blocks.filter(b => b.id !== block.id))}
-                className="mb-[2px] text-slate-300 hover:text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors"
-              >
-                <Trash2 size={18} />
-              </button>
             </motion.div>
           ))}
         </AnimatePresence>
