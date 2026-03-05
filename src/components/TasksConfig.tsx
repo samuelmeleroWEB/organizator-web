@@ -15,7 +15,7 @@ export interface TasksConfigProps {
 
 export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan, generatePlan }: TasksConfigProps) {
   return (
-    <section className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex-1 flex flex-col min-h-[300px]">
+    <section className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex-1 flex flex-col min-h-[380px]">
       <div className="flex items-center justify-between mb-5 border-b border-slate-100 pb-3">
         <div className="flex items-center gap-3">
           <div className="bg-emerald-100 p-2 rounded-lg text-emerald-600">
@@ -25,7 +25,7 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
         </div>
       </div>
 
-      <div className="space-y-3 flex-1 overflow-y-auto pr-1">
+      <div className="space-y-3 flex-1 overflow-y-auto pr-1 pb-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-slate-200 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-slate-300">
         <AnimatePresence>
           {tasks.map((task, index) => (
             <motion.div 
@@ -59,21 +59,57 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
                 </button>
               </div>
               
-              <div className="grid grid-cols-[90px_1fr] sm:grid-cols-2 gap-3 items-start text-sm">
-                <div className="flex flex-col">
-                  <label className="text-xs text-gray-400 mb-1">Duración (min)</label>
-                  <input 
-                    type="number"
-                    step="15" 
-                    min="5"
-                    value={task.durationMinutes}
-                    onChange={e => {
-                      const nt = [...tasks];
-                      nt[index].durationMinutes = parseInt(e.target.value) || 0;
-                      setTasks(nt);
-                    }}
-                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 outline-none text-sm text-gray-700 focus:border-indigo-500 transition-colors duration-150"
-                  />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-4 items-start text-sm mt-1">
+                <div className="flex flex-col min-w-0">
+                  <label className="text-xs text-slate-400 mb-1.5 px-0.5">Duración estimada</label>
+                  <div className="-mx-4 px-4 sm:mx-0 sm:px-0">
+                    <div className="flex gap-2 overflow-x-auto pb-2 items-center w-full snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                      {[
+                        { v: 15, l: '15m' },
+                        { v: 30, l: '30m' },
+                        { v: 45, l: '45m' },
+                        { v: 60, l: '1h' },
+                        { v: 90, l: '1.5h' },
+                        { v: 120, l: '2h' }
+                      ].map(preset => (
+                        <button
+                          key={preset.v}
+                          onClick={() => {
+                            const nt = [...tasks];
+                            nt[index].durationMinutes = preset.v;
+                            setTasks(nt);
+                          }}
+                          className={`shrink-0 snap-start border rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all ${
+                            task.durationMinutes === preset.v
+                              ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm shadow-indigo-200'
+                              : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                          }`}
+                        >
+                          {preset.l}
+                        </button>
+                      ))}
+                      <div className={`shrink-0 snap-start flex items-center border rounded-xl pl-3 pr-1 py-1 transition-all ${
+                        ![15, 30, 45, 60, 90, 120].includes(task.durationMinutes) && task.durationMinutes > 0
+                          ? 'bg-indigo-50 border-indigo-300 ring-1 ring-indigo-300'
+                          : 'bg-white border-slate-200 focus-within:border-indigo-400 focus-within:ring-1 focus-within:ring-indigo-400'
+                      }`}>
+                        <input 
+                          type="number"
+                          min="1"
+                          value={task.durationMinutes || ''}
+                          onChange={e => {
+                            const nt = [...tasks];
+                            nt[index].durationMinutes = parseInt(e.target.value) || 0;
+                            setTasks(nt);
+                          }}
+                          className="w-8 text-xs font-semibold text-center outline-none bg-transparent py-0.5 text-slate-700 placeholder:text-slate-300 placeholder:font-normal"
+                          placeholder="--"
+                        />
+                        <span className="text-[10px] text-slate-400 font-medium ml-1 mr-1">min</span>
+                      </div>
+                      <div className="w-1 shrink-0 sm:hidden"></div>
+                    </div>
+                  </div>
                 </div>
                 <div className="flex flex-col">
                    <label className="text-xs text-gray-400 mb-1">Prioridad</label>
@@ -115,16 +151,16 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
           ))}
         </AnimatePresence>
         {tasks.length === 0 && (
-           <div className="flex flex-col items-center justify-center opacity-50 py-10">
-              <LayoutDashboard size={48} className="text-slate-300 mb-3" />
-              <p className="text-slate-500 font-medium text-center">Añade tus tareas para organizarlas</p>
+           <div className="flex flex-col items-center justify-center opacity-40 py-8">
+              <LayoutDashboard size={44} className="text-slate-400 mb-3" />
+              <p className="text-slate-500 font-medium text-sm text-center">Añade tus tareas para organizarlas</p>
            </div>
         )}
         <button 
           onClick={() => setTasks([...tasks, { id: Math.random().toString(), name: '', durationMinutes: 60, priority: 'media' }])}
-          className="w-full flex items-center justify-center gap-2 border border-dashed border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 text-gray-400 hover:text-indigo-500 rounded-lg py-2 mt-2 text-sm transition-all duration-150"
+          className="w-full flex shrink-0 items-center justify-center gap-2 border border-dashed border-slate-300 hover:border-indigo-400 hover:bg-indigo-50 text-slate-500 hover:text-indigo-600 rounded-xl py-3 mt-4 mb-4 text-sm font-medium transition-all duration-200"
         >
-          <Plus size={16} /> Añadir tarea
+          <Plus size={18} /> Añadir tarea
         </button>
       </div>
       
