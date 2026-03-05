@@ -138,7 +138,7 @@ export default function Home() {
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-amber-400/20 rounded-full blur-[150px] translate-x-1/3 translate-y-1/3 pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-emerald-400/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-      <main className="max-w-7xl mx-auto relative z-10 flex flex-col h-full lg:h-[calc(100vh-4rem)]">
+      <main className="max-w-7xl mx-auto relative z-10 flex flex-col min-h-screen lg:min-h-[calc(100vh-4rem)]">
         
         <Header showSettings={showSettings} setShowSettings={setShowSettings} />
 
@@ -152,10 +152,10 @@ export default function Home() {
           saveConfig={saveConfig}
         />
 
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 overflow-hidden min-h-0">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           
           {/* Left Panel: Inputs */}
-          <div className="lg:col-span-5 flex flex-col gap-8 lg:overflow-y-auto lg:pr-2 custom-scrollbar pb-10">
+          <div className="lg:col-span-5 flex flex-col gap-8 lg:pr-2 pb-10">
             <TimeWindowsConfig windows={windows} setWindows={setWindows} />
             <FixedBlocksConfig blocks={blocks} setBlocks={setBlocks} />
             <TasksConfig 
@@ -169,7 +169,7 @@ export default function Home() {
           </div>
 
           {/* Right Panel: Daily Plan / Canvas */}
-          <div className="lg:col-span-7 h-full flex flex-col relative max-h-fit lg:overflow-hidden lg:max-h-full">
+          <div className="lg:col-span-7 flex flex-col relative lg:sticky lg:top-8 lg:h-[calc(100vh-6rem)]">
             <PlanResult plan={plan} loading={loading} />
           </div>
         </div>

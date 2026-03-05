@@ -15,7 +15,7 @@ export interface TasksConfigProps {
 
 export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan, generatePlan }: TasksConfigProps) {
   return (
-    <section className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex-1 flex flex-col min-h-[380px]">
+    <section className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex-1 flex flex-col">
       <div className="flex items-center justify-between mb-5 border-b border-slate-100 pb-3">
         <div className="flex items-center gap-3">
           <div className="bg-emerald-100 p-2 rounded-lg text-emerald-600">
@@ -25,7 +25,7 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
         </div>
       </div>
 
-      <div className="space-y-3 flex-1 overflow-y-auto pr-1 pb-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-slate-200 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-slate-300">
+      <div className="space-y-3 flex-1 pr-1 pb-4">
         <AnimatePresence>
           {tasks.map((task, index) => (
             <motion.div 
