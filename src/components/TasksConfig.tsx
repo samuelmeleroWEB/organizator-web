@@ -62,8 +62,8 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-4 items-start text-sm mt-1">
                 <div className="flex flex-col min-w-0">
                   <label className="text-xs text-slate-400 mb-1.5 px-0.5">Duración estimada</label>
-                  <div className="-mx-4 px-4 sm:mx-0 sm:px-0">
-                    <div className="flex gap-2 overflow-x-auto pb-2 items-center w-full snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                  <div className="w-full">
+                    <div className="flex flex-wrap gap-2 items-center w-full">
                       {[
                         { v: 15, l: '15m' },
                         { v: 30, l: '30m' },
@@ -79,7 +79,7 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
                             nt[index].durationMinutes = preset.v;
                             setTasks(nt);
                           }}
-                          className={`shrink-0 snap-start border rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all ${
+                          className={`border rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all ${
                             task.durationMinutes === preset.v
                               ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm shadow-indigo-200'
                               : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
@@ -88,7 +88,7 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
                           {preset.l}
                         </button>
                       ))}
-                      <div className={`shrink-0 snap-start flex items-center border rounded-xl pl-3 pr-1 py-1 transition-all ${
+                      <div className={`flex items-center border rounded-xl pl-3 pr-1 py-1 transition-all ${
                         ![15, 30, 45, 60, 90, 120].includes(task.durationMinutes) && task.durationMinutes > 0
                           ? 'bg-indigo-50 border-indigo-300 ring-1 ring-indigo-300'
                           : 'bg-white border-slate-200 focus-within:border-indigo-400 focus-within:ring-1 focus-within:ring-indigo-400'
@@ -107,7 +107,6 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
                         />
                         <span className="text-[10px] text-slate-400 font-medium ml-1 mr-1">min</span>
                       </div>
-                      <div className="w-1 shrink-0 sm:hidden"></div>
                     </div>
                   </div>
                 </div>
