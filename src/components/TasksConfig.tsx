@@ -177,10 +177,10 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
           whileTap={{ scale: 0.97 }}
           onClick={generatePlan}
           disabled={loading || tasks.length === 0}
-          className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-5 py-2.5 text-sm font-medium transition-colors duration-150 disabled:opacity-50 flex items-center justify-center gap-2"
+          className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-5 py-2.5 text-sm font-medium transition-colors duration-150 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
          >
           {loading ? <Loader2 className="animate-spin" /> : <Zap />}
-          {loading ? 'Generando...' : 'Crear mi IA Agenda'}
+          {loading ? 'Generando tu plan...' : 'Crear mi IA Agenda'}
          </motion.button>
       </div>
       

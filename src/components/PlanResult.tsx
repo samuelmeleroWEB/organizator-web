@@ -26,17 +26,12 @@ export function PlanResult({ plan, loading }: PlanResultProps) {
 
   if (loading) {
     return (
-      <div className="w-full h-full bg-white/60 backdrop-blur-md rounded-3xl border border-white flex flex-col items-center justify-center shadow-lg min-h-[400px]">
-         <div className="relative">
-           <div className="absolute inset-0 bg-blue-500 rounded-full blur-xl opacity-20 animate-pulse"></div>
-           <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ ease: "linear", repeat: Infinity, duration: 4 }}
-              className="w-24 h-24 border-4 border-slate-200 border-t-blue-500 rounded-full"
-           />
-         </div>
-         <p className="mt-8 text-slate-800 font-bold text-xl animate-pulse">Optimizando tu tiempo...</p>
-         <p className="mt-2 text-slate-500 font-medium text-sm">Organizando picos de productividad y descansos</p>
+      <div className="w-full h-full bg-white border border-slate-100 shadow-xl rounded-3xl flex flex-col justify-center p-6 md:p-8 min-h-[500px]">
+        <div className="space-y-4">
+          <div className="bg-gray-100 animate-pulse rounded-lg h-16 w-full"></div>
+          <div className="bg-gray-100 animate-pulse rounded-lg h-16 w-full delay-75"></div>
+          <div className="bg-gray-100 animate-pulse rounded-lg h-16 w-full delay-150"></div>
+        </div>
       </div>
     );
   }
@@ -51,8 +46,8 @@ export function PlanResult({ plan, loading }: PlanResultProps) {
       >
         {/* Header Resultado */}
         <div className="p-6 md:p-8 border-b border-slate-100 bg-gradient-to-br from-white to-blue-50">
-          <h2 className="text-3xl font-black text-slate-800 tracking-tight">Tu Plan Maestro</h2>
-          <p className="text-slate-600 mt-3 text-base leading-relaxed font-medium">✨ {plan.resumen}</p>
+          <h2 className="text-xl md:text-3xl font-black text-slate-800 tracking-tight">Tu Plan Maestro</h2>
+          <p className="text-slate-600 mt-3 text-sm md:text-base leading-relaxed font-medium">✨ {plan.resumen}</p>
         </div>
 
         {!plan.viable && (
