@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Task, Block, AvailableWindow, PlanResponse } from '@/types';
 import { Header } from '@/components/Header';
-import { SettingsModal } from '@/components/SettingsModal';
 import { TimeWindowsConfig } from '@/components/TimeWindowsConfig';
 import { FixedBlocksConfig } from '@/components/FixedBlocksConfig';
 import { TasksConfig } from '@/components/TasksConfig';
@@ -12,7 +11,6 @@ import { PlanResult } from '@/components/PlanResult';
 export default function Home() {
   const [apiKey, setApiKey] = useState('');
   const [model, setModel] = useState('gpt-4o-mini');
-  const [showSettings, setShowSettings] = useState(false);
 
   const [tasks, setTasks] = useState<Task[]>([]);
   const [blocks, setBlocks] = useState<Block[]>([]);
@@ -31,12 +29,6 @@ export default function Home() {
     if (savedKey) setApiKey(savedKey);
     if (savedModel) setModel(savedModel);
   }, []);
-
-  const saveConfig = () => {
-    localStorage.setItem('organizator_api_key', apiKey);
-    localStorage.setItem('organizator_model', model);
-    setShowSettings(false);
-  };
 
   const generateDemoPlan = () => {
     setLoading(true);
@@ -93,11 +85,6 @@ export default function Home() {
   }
 
   const generatePlan = async () => {
-    if (!apiKey) {
-      alert("Por favor, configura tu API Key primero en los Ajustes (icono engranaje).");
-      setShowSettings(true);
-      return;
-    }
 
     setLoading(true);
     setError('');
@@ -140,17 +127,7 @@ export default function Home() {
 
       <main className="max-w-7xl mx-auto relative z-10 flex flex-col min-h-screen lg:min-h-[calc(100vh-4rem)]">
         
-        <Header showSettings={showSettings} setShowSettings={setShowSettings} />
-
-        <SettingsModal 
-          showSettings={showSettings}
-          setShowSettings={setShowSettings}
-          model={model}
-          setModel={setModel}
-          apiKey={apiKey}
-          setApiKey={setApiKey}
-          saveConfig={saveConfig}
-        />
+        <Header />
 
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           
@@ -173,6 +150,10 @@ export default function Home() {
             <PlanResult plan={plan} loading={loading} />
           </div>
         </div>
+
+        <footer className="text-xs text-gray-300 text-center py-4 mt-auto">
+          Powered by GPT-4o
+        </footer>
       </main>
     </div>
   );
