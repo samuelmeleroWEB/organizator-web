@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server';
+import Groq from 'groq-sdk';
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const SYSTEM_PROMPT = `
 Eres un asistente personal de organización del tiempo, experto en productividad y gestión de tareas. Tu función es crear un plan del día óptimo basado en la información que el usuario te proporciona.
@@ -44,75 +47,28 @@ Eres un asistente personal de organización del tiempo, experto en productividad
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { apiKey, model, data } = body;
-
-        // We'll support both OpenAI and Anthropic based on the model provided by the user
-        if (!apiKey) {
-            return NextResponse.json(
-                { error: 'API Key es requerida' },
-                { status: 400 }
-            );
-        }
+        const { data } = body;
 
         const payloadContext = JSON.stringify(data, null, 2);
 
-        if (model.includes('gpt')) {
-            // OpenAI format
-            const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${apiKey}`,
-                },
-                body: JSON.stringify({
-                    model: model || 'gpt-4o',
-                    response_format: { type: "json_object" },
-                    messages: [
-                        { role: 'system', content: SYSTEM_PROMPT },
-                        { role: 'user', content: `Aquí están los datos del usuario para el plan de hoy:\n\n${payloadContext}` },
-                    ],
-                }),
-            });
+        const completion = await groq.chat.completions.create({
+            model: 'llama-3.3-70b-versatile',
+            response_format: { type: "json_object" },
+            messages: [
+                { role: 'system', content: SYSTEM_PROMPT },
+                { role: 'user', content: `Aquí están los datos del usuario para el plan de hoy:\n\n${payloadContext}` },
+            ],
+            temperature: 0.7,
+            max_tokens: 1000,
+        });
 
-            if (!response.ok) {
-                const error = await response.text();
-                throw new Error(error);
-            }
+        const content = completion.choices[0].message?.content;
 
-            const raw = await response.json();
-            return NextResponse.json(JSON.parse(raw.choices[0].message.content));
-        } else {
-            // Anthropic format
-            const response = await fetch('https://api.anthropic.com/v1/messages', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': apiKey,
-                    'anthropic-version': '2023-06-01',
-                },
-                body: JSON.stringify({
-                    model: model || 'claude-3-5-sonnet-20240620',
-                    max_tokens: 4096,
-                    system: SYSTEM_PROMPT + "\\n\\nDevuelve SOLAMENTE el JSON válido, sin backticks ni etiquetas.",
-                    messages: [
-                        { role: 'user', content: `Aquí están los datos del usuario para el plan de hoy:\n\n${payloadContext}` },
-                    ],
-                }),
-            });
-
-            if (!response.ok) {
-                const error = await response.text();
-                throw new Error(error);
-            }
-
-            const raw = await response.json();
-            const content = raw.content[0].text;
-
-            // Attempt to strip potential markdown blocks
-            const cleanContent = content.replace(/^\\s*\`\`\`json\\s*/g, '').replace(/\\s*\`\`\`\\s*$/g, '').trim();
-
-            return NextResponse.json(JSON.parse(cleanContent));
+        if (!content) {
+            throw new Error("No se pudo generar el plan: Respuesta vacía de Groq");
         }
+
+        return NextResponse.json(JSON.parse(content));
     } catch (error: unknown) {
         console.error('Error generating plan:', error);
         if (error instanceof Error) {
