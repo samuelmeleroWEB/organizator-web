@@ -3,6 +3,7 @@
 import { Zap, Plus, Trash2, LayoutDashboard, Sparkles, Loader2, AlertTriangle } from 'lucide-react';
 import { Task } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 
 export interface TasksConfigProps {
   tasks: Task[];
@@ -14,6 +15,16 @@ export interface TasksConfigProps {
 }
 
 export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan, generatePlan }: TasksConfigProps) {
+  const [invalidTaskIds, setInvalidTaskIds] = useState<string[]>([]);
+
+  const handleGeneratePlan = () => {
+    const invalidIds = tasks.filter(t => !t.name.trim()).map(t => t.id);
+    if (invalidIds.length > 0) {
+      setInvalidTaskIds(invalidIds);
+      return;
+    }
+    generatePlan();
+  };
   return (
     <section className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex-1 flex flex-col">
       <div className="flex items-center justify-between mb-5 border-b border-slate-100 pb-3">
@@ -47,9 +58,15 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
                       const nt = [...tasks];
                       nt[index].name = e.target.value;
                       setTasks(nt);
+                      if (invalidTaskIds.includes(task.id)) {
+                        setInvalidTaskIds(prev => prev.filter(id => id !== task.id));
+                      }
                     }}
-                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-indigo-500 transition-colors duration-150 text-gray-700 placeholder:text-gray-400"
+                    className={`w-full bg-white border ${invalidTaskIds.includes(task.id) ? 'border-red-400' : 'border-gray-200'} rounded-lg px-3 py-2 text-sm outline-none focus:border-indigo-500 transition-colors duration-150 text-gray-700 placeholder:text-gray-400`}
                   />
+                  {invalidTaskIds.includes(task.id) && (
+                    <p className="text-xs text-red-500 mt-1">Por favor, indica un nombre para esta tarea</p>
+                  )}
                 </div>
                 <button 
                   onClick={() => setTasks(tasks.filter(t => t.id !== task.id))}
@@ -175,7 +192,7 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
 
          <motion.button 
           whileTap={{ scale: 0.97 }}
-          onClick={generatePlan}
+          onClick={handleGeneratePlan}
           disabled={loading || tasks.length === 0}
           className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-5 py-2.5 text-sm font-medium transition-colors duration-150 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
          >
