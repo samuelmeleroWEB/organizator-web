@@ -52,7 +52,7 @@ export async function POST(req: Request) {
         const payloadContext = JSON.stringify(data, null, 2);
 
         const completion = await groq.chat.completions.create({
-            model: 'llama-3.3-70b-versatile',
+            model: 'llama-3.1-8b-instant',
             response_format: { type: "json_object" },
             messages: [
                 { role: 'system', content: SYSTEM_PROMPT },
