@@ -119,7 +119,7 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col bg-slate-50 text-slate-800 p-4 sm:p-4 lg:p-6 relative selection:bg-blue-200">
+    <div className="h-auto md:h-screen md:overflow-hidden flex flex-col bg-slate-50 text-slate-800 p-4 sm:p-4 lg:p-6 relative selection:bg-blue-200">
       {/* Background soft energetic shapes */}
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-400/20 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-amber-400/20 rounded-full blur-[150px] translate-x-1/3 translate-y-1/3 pointer-events-none" />
@@ -146,7 +146,7 @@ export default function Home() {
           </div>
 
           {/* Right Panel: Daily Plan / Canvas */}
-          <div className="lg:col-span-7 flex flex-col relative h-full">
+          <div className={`lg:col-span-7 flex-col relative h-full ${plan || loading ? 'flex' : 'hidden md:flex'}`}>
             <PlanResult plan={plan} loading={loading} />
           </div>
         </div>
