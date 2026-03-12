@@ -173,7 +173,18 @@ export function TasksConfig({ tasks, setTasks, loading, error, generateDemoPlan,
            </div>
         )}
         <button 
-          onClick={() => setTasks([...tasks, { id: Math.random().toString(), name: '', durationMinutes: 60, priority: 'media' }])}
+          onClick={() => {
+            if (tasks.length > 0) {
+              const lastTask = tasks[tasks.length - 1];
+              if (!lastTask.name.trim()) {
+                if (!invalidTaskIds.includes(lastTask.id)) {
+                  setInvalidTaskIds([...invalidTaskIds, lastTask.id]);
+                }
+                return;
+              }
+            }
+            setTasks([...tasks, { id: Math.random().toString(), name: '', durationMinutes: 60, priority: 'media' }]);
+          }}
           className="w-full flex shrink-0 items-center justify-center gap-2 border border-dashed border-slate-300 hover:border-indigo-400 hover:bg-indigo-50 text-slate-500 hover:text-indigo-600 rounded-xl py-3 mt-4 mb-4 text-sm font-medium transition-all duration-200"
         >
           <Plus size={18} /> Añadir tarea
