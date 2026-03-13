@@ -8,9 +8,10 @@ export interface CustomTimeSelectProps {
   onChange: (val: string) => void;
   icon?: React.ReactNode;
   className?: string;
+  hasError?: boolean;
 }
 
-export function CustomTimeSelect({ value, onChange, icon, className = '' }: CustomTimeSelectProps) {
+export function CustomTimeSelect({ value, onChange, icon, className = '', hasError = false }: CustomTimeSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const activeOptionRef = useRef<HTMLButtonElement>(null);
@@ -58,8 +59,10 @@ export function CustomTimeSelect({ value, onChange, icon, className = '' }: Cust
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full py-2 bg-white border border-gray-200 rounded-lg outline-none transition-colors duration-150 cursor-pointer text-left text-gray-700 relative flex items-center justify-between ${
-          isOpen ? '!border-indigo-500' : 'hover:border-gray-300'
+        className={`w-full py-2 bg-white border ${
+          hasError ? 'border-red-400' : 'border-gray-200'
+        } rounded-lg outline-none transition-colors duration-150 cursor-pointer text-left text-gray-700 relative flex items-center justify-between ${
+          isOpen ? '!border-indigo-500' : hasError ? 'hover:border-red-500' : 'hover:border-gray-300'
         } ${
           icon ? 'pl-10 pr-3' : 'px-3'
         }`}

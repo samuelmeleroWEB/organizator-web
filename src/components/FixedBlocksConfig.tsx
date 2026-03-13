@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Calendar, Plus, Trash2, Clock } from 'lucide-react';
 import { Block } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,6 +12,41 @@ export interface FixedBlocksConfigProps {
 }
 
 export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps) {
+  const [errorField, setErrorField] = useState<'name' | 'time' | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const handleAddBlock = () => {
+    setErrorField(null);
+    setErrorMessage('');
+
+    if (blocks.length > 0) {
+      const lastBlock = blocks[blocks.length - 1];
+      
+      if (!lastBlock.name.trim()) {
+        setErrorField('name');
+        setErrorMessage('Por favor, indica un nombre para este bloque');
+        return;
+      }
+
+      if (!lastBlock.startTime || !lastBlock.endTime) {
+        setErrorField('time');
+        setErrorMessage('Por favor, indica la hora de inicio y fin');
+        return;
+      }
+
+      const start = new Date(`1970-01-01T${lastBlock.startTime}:00`);
+      const end = new Date(`1970-01-01T${lastBlock.endTime}:00`);
+      
+      if (end <= start) {
+        setErrorField('time');
+        setErrorMessage('La hora de fin debe ser posterior a la de inicio');
+        return;
+      }
+    }
+
+    setBlocks([...blocks, { id: Math.random().toString(), name: '', startTime: '12:00', endTime: '13:00' }]);
+  };
+
   return (
     <section className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex-shrink-0">
       <div className="flex items-center justify-between mb-5 border-b border-slate-100 pb-3">
@@ -42,12 +78,18 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
                         placeholder="Ej. Reunión..."
                         value={block.name}
                         onChange={e => {
+                          setErrorField(null);
                           const nb = [...blocks];
                           nb[index].name = e.target.value;
                           setBlocks(nb);
                         }}
-                        className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-indigo-500 transition-colors duration-150 text-gray-700"
+                        className={`w-full bg-white border ${
+                          index === blocks.length - 1 && errorField === 'name' ? 'border-red-400' : 'border-gray-200'
+                        } rounded-lg px-3 py-2 text-sm outline-none focus:border-indigo-500 transition-colors duration-150 text-gray-700`}
                       />
+                      {index === blocks.length - 1 && errorField === 'name' && (
+                        <p className="text-xs text-red-500 mt-1">{errorMessage}</p>
+                      )}
                     </div>
                   </div>
                   <button 
@@ -63,10 +105,12 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
                     <CustomTimeSelect
                       value={block.startTime}
                       onChange={val => {
+                        setErrorField(null);
                         const nb = [...blocks];
                         nb[index].startTime = val;
                         setBlocks(nb);
                       }}
+                      hasError={index === blocks.length - 1 && errorField === 'time'}
                       icon={<Clock size={16} />}
                     />
                   </div>
@@ -75,14 +119,19 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
                     <CustomTimeSelect
                       value={block.endTime}
                       onChange={val => {
+                        setErrorField(null);
                         const nb = [...blocks];
                         nb[index].endTime = val;
                         setBlocks(nb);
                       }}
+                      hasError={index === blocks.length - 1 && errorField === 'time'}
                       icon={<Clock size={16} />}
                     />
                   </div>
                 </div>
+                {index === blocks.length - 1 && errorField === 'time' && (
+                  <p className="text-xs text-red-500">{errorMessage}</p>
+                )}
               </div>
             </motion.div>
           ))}
@@ -93,7 +142,7 @@ export function FixedBlocksConfig({ blocks, setBlocks }: FixedBlocksConfigProps)
           </div>
         )}
         <button 
-          onClick={() => setBlocks([...blocks, { id: Math.random().toString(), name: '', startTime: '12:00', endTime: '13:00' }])}
+          onClick={handleAddBlock}
           className="w-full flex items-center justify-center gap-2 border border-dashed border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 text-gray-400 hover:text-indigo-500 rounded-lg py-2 mt-2 text-sm transition-all duration-150"
         >
           <Plus size={16} /> Añadir bloque
