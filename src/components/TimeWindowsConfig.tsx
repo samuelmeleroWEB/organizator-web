@@ -25,12 +25,26 @@ export function TimeWindowsConfig({ windows, setWindows }: TimeWindowsConfigProp
           setError('La hora de fin debe ser posterior a la de inicio');
           return;
         }
+
       } else {
         setError('Por favor, indica la hora de inicio y fin');
         return;
       }
     }
-    setWindows([...windows, { id: Math.random().toString(), startTime: '16:00', endTime: '19:00' }]);
+
+    const newStartTime = '16:00';
+    const newEndTime = '19:00';
+
+    const isDuplicate = windows.some(
+      w => w.startTime === newStartTime && w.endTime === newEndTime
+    );
+
+    if (isDuplicate) {
+      setError('Ya existe un tramo con este horario');
+      return;
+    }
+
+    setWindows([...windows, { id: Math.random().toString(), startTime: newStartTime, endTime: newEndTime }]);
   };
 
   return (
